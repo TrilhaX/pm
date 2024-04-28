@@ -48,18 +48,27 @@ local function GetCFrame(obj)
     return cframe
 end
 
+local selectedClan = ""
+
 function RollDeClan()
     while getgenv().RollDeClan == true do
-        local clan = game:GetService("ReplicatedStorage").Player_Datas.eaenescau0.Slot_1.Clan.Value
-        if selectedClan == clan then
-            print("Pegou UHUUUUL")
-        else 
-            local args = {
-                [1] = 1
-            }
+        local Player_Datas = game:GetService("ReplicatedStorage").Player_Datas
+        local player = game.Players.LocalPlayer
+        local children = Player_Datas:GetChildren()
+        for _, child in ipairs(children) do
+            local clan = child.Slot_1.Clan.Value
+            if selectedClan == clan then
+                print("Pegou UHUUUUL")
+            else 
+                local args = {
+                    [1] = 1
+                }
             
-            game:GetService("ReplicatedStorage"):WaitForChild("Spin"):InvokeServer(unpack(args))            
+                game:GetService("ReplicatedStorage"):WaitForChild("Spin"):InvokeServer(unpack(args))
+                wait(delay)
+            end     
         end
+        wait(2)
     end
 end
 
@@ -93,7 +102,6 @@ local MyButton = LeftGroupBox:AddButton({
         game:GetService("ReplicatedStorage"):WaitForChild("Code"):InvokeServer(unpack(args))        
     end,
     DoubleClick = false,
-    Tooltip = ''
 })
 
 LeftGroupBox:AddDropdown('Map', {
@@ -109,12 +117,24 @@ LeftGroupBox:AddDropdown('Map', {
 LeftGroupBox:AddToggle('AutoRoll', {
     Text = 'Auto Roll',
     Default = false,
-    Tooltip = '',
     Callback = function(Value)
         getgenv().RollDeClan = Value
         if Value then
             RollDeClan()
         end
+    end
+})
+
+LeftGroupBox:AddSlider('delay', {
+    Text = 'spam of auto roll',
+    Default = 1,
+    Min = 0,
+    Max = 10,
+    Rounding = 1,
+    Compact = false,
+
+    Callback = function(Value)
+        delay = Value
     end
 })
 
