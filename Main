@@ -96,22 +96,24 @@ local Tabs = {
 local LeftGroupBox = Tabs.Main:AddLeftGroupbox('Player')
 
 local MyButton = LeftGroupBox:AddButton({
-    Text = 'Reedem Codes',
+    Text = 'Redeem Codes', -- corrected spelling of 'Redeem'
     Func = function()
         local args = {
             [1] = codes
         }
         
-        game:GetService("ReplicatedStorage"):WaitForChild("Code"):InvokeServer(unpack(args))        
+        game:GetService("ReplicatedStorage"):WaitForChild("Code"):InvokeServer(unpack(args))   
+        wait(2)     
     end,
     DoubleClick = false,
 })
 
-LeftGroupBox:AddDropdown('Map', {
+
+LeftGroupBox:AddDropdown('Clan', {
     Values = {"Asano", "Arisawa", "Joaquin", "Haida", "Hanakari", "Honsho", "Ide", "Iijima", "Kanoniji", "Kojima", "Kunieda", "Natsui", "Shigeo", "Dokugamine", "Sado", "Inoue", "Ginjo", "Kutsuzawa", "Tsukishima", "Shishigawara", "Yukio", "Kotetsu", "Mugurama", "Yadomaru", "Iba", "Kira", "Hirako", "Ushoda", "Sarugaki", "Amagi", "Valkyrie", "Jagerjaquez", "Hitsugaya", "Hisagi", "Ichimaru", "Shihoin", "Unohana","Sasuke", "Naruto", "Itachi", "Urahara", "Kurosaki", "Itadori", "Brook", "Ginjo", "Ichibei", "Gojo","Tsukishima"},
     Default = "None",
     Multi = false,
-    Text = 'Choose Map',
+    Text = 'Choose Clan',
     Callback = function(value)
         selectedClan = value
     end
@@ -223,6 +225,677 @@ warn('[TEMPEST HUB] Loaded')
 end
 
 if Id == 9474703390 then
+warn('[TEMPEST HUB] Loading Bypass')
+wait(1)
+warn('[TEMPEST HUB] Loading Ui')
+wait(1)
+local repo = 'https://raw.githubusercontent.com/TrapstarKSSKSKSKKS/LinoriaLib/main/'
+
+local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
+local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))()
+local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))()
+Library:Notify('Welcome to Tempest Hub', 5)
+
+local Window = Library:CreateWindow({
+
+    Title = 'Tempest Hub | Project Mugetsu',
+    Center = true,
+    AutoShow = true,
+    TabPadding = 8,
+    MenuFadeTime = 0.2
+})
+
+Library:Notify('Loading Project Mugetsu Script', 5)
+
+warn('[TEMPEST HUB] Loading Function')
+wait(1)
+warn('[TEMPEST HUB] Loading Toggles')
+wait(1)
+warn('[TEMPEST HUB] Last Checking')
+wait(1)
+
+
+local TweenService = game:GetService("TweenService")
+local speed = 1000
+
+function tweenModel(model, targetCFrame)
+    local duration = (model.PrimaryPart.Position - targetCFrame.Position).Magnitude / speed
+    local info = TweenInfo.new(duration, Enum.EasingStyle.Linear)
+    
+    local cframeValue = Instance.new("CFrameValue")
+    cframeValue.Value = model:GetPrimaryPartCFrame()
+    
+    cframeValue:GetPropertyChangedSignal("Value"):Connect(function()
+        model:SetPrimaryPartCFrame(cframeValue.Value)
+    end)
+    
+    local tween = TweenService:Create(cframeValue, info, {
+        Value = targetCFrame,
+    })
+    
+    tween:Play()
+    tween.Completed:Connect(function()
+        cframeValue:Destroy()
+    end)
+end
+
+local function GetCFrame(obj)
+    local cframe = CFrame.new()
+    local objType = typeof(obj)
+    
+    if objType == "Vector3" then
+        cframe = CFrame.new(obj)
+    elseif objType == "table" then
+        cframe = CFrame.new(unpack(obj))
+    elseif objType == "string" then
+        local parts = {}
+        for val in obj:gmatch("[^,]+") do
+            table.insert(parts, tonumber(val))
+        end
+        if #parts >= 3 then
+            cframe = CFrame.new(unpack(parts))
+        end
+    elseif objType == "Instance" then
+        if obj:IsA("Model") then
+            local rootPart = obj:FindFirstChild("HumanoidRootPart") or obj:FindFirstChild("Torso")
+            if rootPart then
+                cframe = rootPart.CFrame
+            end
+        elseif obj:IsA("Part") then
+            cframe = obj.CFrame
+        end
+    end
+    
+    return cframe
+end
+
+local selectedClan = ""
+
+function KillAura()
+    while getgenv().KillAura == true do
+        local args = {
+            [1] = "Swing",
+            [2] = 1,
+            [3] = "Fist"
+        }
+        
+        game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Server"):WaitForChild("Initiate_Server"):FireServer(unpack(args))        
+        wait(KillAuraCD)
+    end
+end
+
+function autoshinigami()
+    while getgenv().autoshinigami == true do
+        local kisuke = workspace.World.Interactables.Kisuke.HumanoidRootPart
+        if kisuke then
+            print("Kisuke encontrado")
+            wait()
+            -- Verifica se a janela de progresso da missão está visível
+            local quest = game.Players.LocalPlayer.PlayerGui.HUD.QuestProgress.Visible
+            if quest then
+                local progress = game.Players.LocalPlayer.PlayerGui.HUD.QuestProgress.Shadow.Progress
+                print(progress.Size.X)
+                if progress.Size.X ~= "0, 0" then
+                    local Hollow = workspace.World.Live.Mobs.Hollow
+                    local humanoidRootPart = Hollow:FindFirstChild("HumanoidRootPart", true)
+                    if humanoidRootPart then
+                        local direction = (hollow.Position - game.Players.LocalPlayer.Character.PrimaryPart.Position).unit
+                        local distanceBehind = DistanceMob
+                        local targetPosition = hollow.Position - direction * distanceBehind
+                        local targetCFrame = CFrame.new(targetPosition)
+
+                        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(game.Players.LocalPlayer.Character.PrimaryPart.Position, Shinigami.Position))
+                        wait()
+                    else
+                        print("Hollow nao encontrado")
+                    end
+                else
+                    local targetCFrame = GetCFrame(kisuke)
+                    tweenModel(game.Players.LocalPlayer.Character, targetCFrame)
+                    local args = {
+                        [1] = "To_Reaper"
+                    }
+                    
+                    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Server"):WaitForChild("Initiate_Server"):FireServer(unpack(args))     
+                    wait(5)   
+                end
+            else
+                local targetCFrame = GetCFrame(kisuke)
+                tweenModel(game.Players.LocalPlayer.Character, targetCFrame)
+                local args = {
+                    [1] = "Kisuke",
+                    [2] = "Add"
+                }
+
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Quest_Remote"):FireServer(unpack(args))
+                wait()
+            end
+        else
+            print("Kisuke não encontrado")
+            wait()
+        end
+    end
+end
+
+function autohollow()
+    while getgenv().autohollow == true do
+        local aizen = workspace.World.Interactables.Aizen.HumanoidRootPart
+        if aizen then
+            print("Aizen encontrado")
+            wait()
+            -- Verifica se a janela de progresso da missão está visível
+            local quest = game.Players.LocalPlayer.PlayerGui.HUD.QuestProgress.Visible
+            if quest then
+                local progress = game.Players.LocalPlayer.PlayerGui.HUD.QuestProgress.Shadow.Progress
+                print(progress.Size.X)
+                if progress.Size.X ~= "0, 0" then
+                    local hollow = workspace.World.Live.Mobs.hollow
+                    local humanoidRootPart = hollow:FindFirstChild("HumanoidRootPart", true)
+                    if humanoidRootPart then
+                        local direction = (hollow.Position - game.Players.LocalPlayer.Character.PrimaryPart.Position).unit
+                        local distanceBehind = DistanceMob
+                        local targetPosition = hollow.Position - direction * distanceBehind
+                        local targetCFrame = CFrame.new(targetPosition)
+                        
+                        -- Orienta o personagem na direção do Hollow
+                        game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(game.Players.LocalPlayer.Character.PrimaryPart.Position, hollow.Position))
+                        wait()
+                    else
+                        print("Hollow não encontrado")
+                    end
+                else
+                    local targetCFrame = GetCFrame(kisuke)
+                    tweenModel(game.Players.LocalPlayer.Character, targetCFrame)
+                    local args = {
+                        [1] = "To_Hollow"
+                    }
+                    
+                    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Server"):WaitForChild("Initiate_Server"):FireServer(unpack(args))     
+                    wait(5)   
+                end
+            else
+                local targetCFrame = GetCFrame(kisuke)
+                tweenModel(game.Players.LocalPlayer.Character, targetCFrame)
+                local args = {
+                    [1] = "Aizen",
+                    [2] = "Add"
+                }
+
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("Quest_Remote"):FireServer(unpack(args))
+                wait()
+            end
+        else
+            print("Aizen não encontrado")
+            wait()
+        end
+    end
+end
+
+
+function killmobs()
+    while getgenv().killmobs do -- Execute enquanto o toggle estiver ativado
+        local blacklist = {
+            ["Event"] = true,
+            ["Test_Area"] = true,
+        }
+        
+        local Mobs = workspace.World.Live.Mobs
+        if Mobs then
+            local children = Mobs:GetChildren()
+            for _, child in ipairs(children) do
+                if not blacklist[child.Name] then
+                    if selectedMob and selectedMob == child.Name then
+                        local humanoidRootPart = child:FindFirstChild("HumanoidRootPart", true)
+                        if humanoidRootPart then
+                            local targetCFrame = GetCFrame(humanoidRootPart)
+                            tweenModel(game.Players.LocalPlayer.Character, targetCFrame) -- Presumindo que você tenha uma função tweenModel() definida
+                            wait()
+                        else
+                            print("No HumanoidRootPart found for", child.Name)
+                        end
+                    else 
+                        print("No tool found for", selectedWeapon)
+                    end
+                end
+            end
+        else
+            print("No Mobs found")
+        end
+        wait() -- Movido wait() fora do loop para um atraso consistente
+    end
+end
+
+function EquipTool(player, selectedWeapon)
+    local Tool = player.Backpack:FindFirstChild(selectedWeapon)
+    if Tool then
+        player.Character.Humanoid:EquipTool(Tool)
+        wait()
+    end
+end
+
+function autoevent()
+    while getgenv().autoevent == true do
+        local EventNpc = workspace.World.Live.Mobs.Event
+        if EventNpc then
+            local humanoidRootPart = EventNpc:FindFirstChild("HumanoidRootPart", true)
+            local targetCFrame = GetCFrame(humanoidRootPart, 20, 90)
+            tweenModel(game.Players.LocalPlayer.Character, targetCFrame)
+            wait()
+        else
+            print("Não Tem Evento")
+            wait()
+        end
+    end
+end
+
+function webhook()
+    while getgenv().webhook == true do
+        -- URL do seu webhook do Discord
+        local discordWebhookUrl = urlwebhook
+
+        -- Obtendo informações do jogador
+        local player = game.Players.LocalPlayer
+        local playerName = player.PlayerGui.HUD.Profile.Info.Actual_Holder.Profile_Thang.UserName.Text
+        local level = playerName:match("%d+")
+        local money = player.PlayerGui.HUD.Holder.Gold.Text
+
+        -- Construindo o payload para enviar para o webhook
+        local payload = {
+            content = "Project Mugetsu",
+            embeds = {{
+                title = "Situação da Conta",
+                description = string.format("Nível: %s\nDinheiro: %s", level, money),
+                color = 10225919,
+                author = {
+                    name = "Nome: " .. player.Name,
+                }
+            }}
+        }
+
+        -- Convertendo a tabela para JSON
+        local payloadJson = game:GetService("HttpService"):JSONEncode(payload)
+
+        -- Enviando a requisição POST para o webhook do Discord
+        request({
+            Url = discordWebhookUrl,
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json"
+            },
+            Body = payloadJson
+        }, function(response)
+            if response.Success then
+                print("Mensagem enviada com sucesso para o Discord.")
+            else
+                warn("Erro ao enviar mensagem para o Discord:", response.StatusCode, response.Body)
+            end
+        end)
+        
+        -- Aguardar 5 segundos antes de enviar a próxima requisição
+        wait(delaywebhook)
+    end
+end
+
+function SetWalkSpeed(Value)
+    local walkSpeed = Value
+    
+    local UIS = game:GetService("UserInputService")
+    local RS = game:GetService("RunService")
+    local W, A, S, D
+    local xVelo, yVelo
+    
+    while true do
+        wait()
+        local HRP = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+        local C = game.Workspace.CurrentCamera
+        local LV = C.CFrame.LookVector
+
+        for i, v in pairs(UIS:GetKeysPressed()) do
+            if v.KeyCode == Enum.KeyCode.W then
+                W = true
+            end
+            if v.KeyCode == Enum.KeyCode.A then
+                A = true
+            end
+            if v.KeyCode == Enum.KeyCode.S then
+                S = true
+            end
+            if v.KeyCode == Enum.KeyCode.D then
+                D = true
+            end
+        end
+
+        if W == true and S == true then
+            yVelo = false
+            W, S = nil, nil
+        end
+
+        if A == true and D == true then
+            xVelo = false
+            A, D = nil, nil
+        end
+
+        if yVelo ~= false then
+            if W == true then
+                if xVelo ~= false then
+                    if A == true then
+                        local LeftLV = (C.CFrame * CFrame.Angles(0, math.rad(45), 0)).LookVector
+                        HRP.Velocity = Vector3.new((LeftLV.X * walkSpeed), HRP.Velocity.Y, (LeftLV.Z * walkSpeed))
+                        W, A = nil, nil
+                    else
+                        if D == true then
+                            local RightLV = (C.CFrame * CFrame.Angles(0, math.rad(-45), 0)).LookVector
+                            HRP.Velocity = Vector3.new((RightLV.X * walkSpeed), HRP.Velocity.Y, (RightLV.Z * walkSpeed))
+                            W, D = nil, nil
+                        end
+                    end
+                end
+            else
+                if S == true then
+                    if xVelo ~= false then
+                        if A == true then
+                            local LeftLV = (C.CFrame * CFrame.Angles(0, math.rad(135), 0)).LookVector
+                            HRP.Velocity = Vector3.new((LeftLV.X * walkSpeed), HRP.Velocity.Y, (LeftLV.Z * walkSpeed))
+                            S, A = nil, nil
+                        else
+                            if D == true then
+                                local RightLV = (C.CFrame * CFrame.Angles(0, math.rad(-135), 0)).LookVector
+                                HRP.Velocity = Vector3.new((RightLV.X * walkSpeed), HRP.Velocity.Y, (RightLV.Z * walkSpeed))
+                                S, D = nil, nil
+                            end
+                        end
+                    end
+                end
+            end
+        end
+
+        if W == true then
+            HRP.Velocity = Vector3.new((LV.X * walkSpeed), HRP.Velocity.Y, (LV.Z * walkSpeed))
+        end
+        if S == true then
+            HRP.Velocity = Vector3.new(-(LV.X * walkSpeed), HRP.Velocity.Y, -(LV.Z * walkSpeed))
+        end
+        if A == true then
+            local LeftLV = (C.CFrame * CFrame.Angles(0, math.rad(90), 0)).LookVector
+            HRP.Velocity = Vector3.new((LeftLV.X * walkSpeed), HRP.Velocity.Y, (LeftLV.Z * walkSpeed))
+        end
+        if D == true then
+            local RightLV = (C.CFrame * CFrame.Angles(0, math.rad(-90), 0)).LookVector
+            HRP.Velocity = Vector3.new((RightLV.X * walkSpeed), HRP.Velocity.Y, (RightLV.Z * walkSpeed))
+        end
+
+        xVelo, yVelo, W, A, S, D = nil, nil, nil, nil, nil, nil
+        wait()
+    end
+end
+
+local weapon = game.Players.LocalPlayer.Backpack
+local children2 = weapon:GetChildren()
+
+local ValueWeapons = {}
+
+for _, child in ipairs(children2) do
+    table.insert(ValueWeapons, child.Name)
+end
+
+local blacklist = {
+    ["Event"] = true,
+    ["Test_Area"] = true,
+}
+
+local ValuesMobNames = {}
+
+local Mobs = workspace.World.Live.Mobs
+if Mobs then
+    local children2 = Mobs:GetChildren()
+    for _, child2 in ipairs(children2) do
+        if not blacklist[child2.Name] then
+            table.insert(ValuesMobNames, child2.Name)
+        end
+    end
+else
+    print("Não Tem Mobs")
+end
+
+local Tabs = {
+    Main = Window:AddTab('Main'),
+}
+
+local LeftGroupBox = Tabs.Main:AddLeftGroupbox('Player')
+
+LeftGroupBox:AddDropdown('Weapons', {
+    Values = ValueWeapons,
+    Default = "None",
+    Multi = false,
+    Text = 'Choose Weapons',
+    Callback = function(value)
+        EquipTool(game.Players.LocalPlayer, value)
+    end
+})
+
+LeftGroupBox:AddToggle('Killaura', {
+    Text = 'Kill Aura',
+    Default = false,
+    Callback = function(Value)
+        getgenv().KillAura = Value
+        if Value then
+            KillAura()
+        end
+    end
+})
+
+local MyButton = LeftGroupBox:AddButton({
+    Text = 'Refresh Weapons',
+    Func = function(value)
+        Weapons:Refresh(ValueWeapons)
+    end,
+        DoubleClick = false,
+})
+
+LeftGroupBox:AddSlider('KillAuraCooldown', {
+    Text = 'Kill Aura Cooldown',
+    Default = 1,
+    Min = 0,
+    Max = 10,
+    Rounding = 1,
+    Compact = false,
+
+    Callback = function(Value)
+        KillAuraCD = Value
+    end
+})
+
+LeftGroupBox:AddToggle('AutoShinigami', {
+    Text = 'Auto Shinigami',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autoshinigami = Value
+        if Value then
+            autoshinigami()
+        end
+    end
+})
+
+LeftGroupBox:AddToggle('AutoHollow', {
+    Text = 'Auto Hollow',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autohollow = Value
+        if Value then
+            autohollow()
+        end
+    end
+})
+
+LeftGroupBox:AddSlider('Walkspeed', {
+    Text = 'Walkspeed',
+    Default = 16,
+    Min = 16,
+    Max = 1000,
+    Rounding = 1,
+    Compact = false,
+    Callback = function(Value)
+        SetWalkSpeed(Value) -- Fixed the function call
+    end
+})
+
+local RightGroupBox = Tabs.Main:AddRightGroupbox('Farm')
+
+RightGroupBox:AddDropdown('KillMob', {
+    Values = ValuesMobNames,
+    Default = "None",
+    Multi = false,
+    Text = 'Choose Mob',
+    Callback = function(value)
+        selectedMob = value
+    end
+})
+
+RightGroupBox:AddToggle('AutoKill', {
+    Text = 'Auto Kill',
+    Default = false,
+    Callback = function(Value)
+        getgenv().killmobs = Value
+        if Value then
+            killmobs() -- Se o toggle estiver ativado, execute a função killmobs()
+        end
+    end
+})
+
+RightGroupBox:AddToggle('AutoEvent', {
+    Text = 'Auto Event',
+    Default = false,
+    Callback = function(Value)
+        getgenv().autoevent = Value
+        if Value then
+            autoevent()
+        end
+    end
+})
+
+local RightGroupBox = Tabs.Main:AddRightGroupbox('WebHook')
+
+RightGroupBox:AddInput('LinkWebhook', {
+    Default = '',
+    Numeric = false, -- true / false, only allows numbers
+    Finished = false, -- true / false, only calls callback when you press enter
+
+    Text = 'WebHook Link',
+    Tooltip = 'Press Enter To Save', -- Information shown when you hover over the textbox
+
+    Placeholder = 'Enter Webhook', -- placeholder text when the box is empty
+    -- MaxLength is also an option which is the max length of the text
+    Callback = function(Value)
+        urlwebhook = Value
+    end
+})
+
+RightGroupBox:AddSlider('SpamWebhook', {
+    Text = 'Delay Webhook',
+    Default = 0,
+    Min = 0,
+    Max = 10,
+    Rounding = 1,
+    Compact = false,
+
+    Callback = function(Value)
+        delaywebhook = Value
+    end
+})
+
+RightGroupBox:AddToggle('Webhook', {
+    Text = 'Send Webhook',
+    Default = false,
+    Callback = function(Value)
+        getgenv().webhook = Value
+        if Value then
+            webhook()
+        end
+    end
+})
+
+local FrameTimer = tick()
+local FrameCounter = 0
+local FPS = 60
+
+local WatermarkConnection
+
+-- Create a function to update FPS and ping information
+local function UpdateWatermark()
+    FrameCounter = FrameCounter + 1
+
+    if (tick() - FrameTimer) >= 1 then
+        FPS = FrameCounter
+        FrameTimer = tick()
+        FrameCounter = 0
+    end
+
+    Library:SetWatermark(('Tempest Hub | %s fps | %s ms'):format(
+        math.floor(FPS),
+        math.floor(game:GetService('Stats').Network.ServerStatsItem['Data Ping']:GetValue())
+    ))
+end
+
+-- Connect the function to the RenderStepped event
+WatermarkConnection = game:GetService('RunService').RenderStepped:Connect(UpdateWatermark)
+
+-- Create tabs for UI settings
+local TabsUI = {
+    ['UI Settings'] = Window:AddTab('UI Settings'),
+}
+
+-- Unload function
+local function Unload()
+    WatermarkConnection:Disconnect()
+    print('Unloaded!')
+    Library.Unloaded = true
+end
+
+-- UI Settings
+local MenuGroup = TabsUI['UI Settings']:AddLeftGroupbox('Menu')
+
+-- Add an unload button
+MenuGroup:AddButton('Unload', Unload)
+
+-- Add a label and key picker for the menu keybind
+MenuGroup:AddLabel('Menu bind'):AddKeyPicker('MenuKeybind', { Default = 'End', NoUI = true, Text = 'Menu keybind' })
+
+-- Define the ToggleKeybind variable
+Library.ToggleKeybind = Options.MenuKeybind
+
+ThemeManager:SetLibrary(Library)
+SaveManager:SetLibrary(Library)
+
+ThemeManager:SetFolder('Tempest Hub')
+SaveManager:SetFolder('Tempest Hub/_p_m_')
+
+SaveManager:BuildConfigSection(TabsUI['UI Settings'])
+
+ThemeManager:ApplyToTab(TabsUI['UI Settings'])
+
+SaveManager:LoadAutoloadConfig()
+
+local GameConfigName = '_p_m_'
+local player = game.Players.LocalPlayer
+SaveManager:Load(player.Name .. GameConfigName)
+spawn(function()
+    while task.wait(1) do
+        if Library.Unloaded then
+            break
+        end
+        SaveManager:Save(player.Name .. GameConfigName)
+    end
+end)
+
+-- Disable player idling
+for i,v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
+    v:Disable()
+end
+warn('[TEMPEST HUB] Loaded')
+end
+
+
+if Id == 10202329527 then
 warn('[TEMPEST HUB] Loading Bypass')
 wait(1)
 warn('[TEMPEST HUB] Loading Ui')
