@@ -449,7 +449,7 @@ function killmobs()
                         if humanoidRootPart then
                             local targetCFrame = GetCFrame(humanoidRootPart)
                             tweenModel(game.Players.LocalPlayer.Character, targetCFrame) -- Presumindo que você tenha uma função tweenModel() definida
-                            wait()
+                            wait(delaytp)
                         else
                             print("No HumanoidRootPart found for", child.Name)
                         end
@@ -759,6 +759,19 @@ RightGroupBox:AddToggle('AutoKill', {
         if Value then
             killmobs() -- Se o toggle estiver ativado, execute a função killmobs()
         end
+    end
+})
+
+LeftGroupBox:AddSlider('DelayTp', {
+    Text = 'Delay Tp',
+    Default = 1,
+    Min = 0,
+    Max = 10,
+    Rounding = 1,
+    Compact = false,
+
+    Callback = function(Value)
+        delaytp = Value
     end
 })
 
@@ -1120,7 +1133,7 @@ function killmobs()
                         if humanoidRootPart then
                             local targetCFrame = GetCFrame(humanoidRootPart)
                             tweenModel(game.Players.LocalPlayer.Character, targetCFrame) -- Presumindo que você tenha uma função tweenModel() definida
-                            wait()
+                            wait(delaytp)
                         else
                             print("No HumanoidRootPart found for", child.Name)
                         end
@@ -1430,6 +1443,19 @@ RightGroupBox:AddToggle('AutoKill', {
         if Value then
             killmobs() -- Se o toggle estiver ativado, execute a função killmobs()
         end
+    end
+})
+
+LeftGroupBox:AddSlider('DelayTp', {
+    Text = 'Delay Tp',
+    Default = 1,
+    Min = 0,
+    Max = 10,
+    Rounding = 1,
+    Compact = false,
+
+    Callback = function(Value)
+        delaytp = Value
     end
 })
 
