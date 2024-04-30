@@ -762,7 +762,7 @@ RightGroupBox:AddToggle('AutoKill', {
     end
 })
 
-LeftGroupBox:AddSlider('DelayTp', {
+RightGroupBox:AddSlider('DelayTp', {
     Text = 'Delay Tp',
     Default = 1,
     Min = 0,
@@ -1446,7 +1446,7 @@ RightGroupBox:AddToggle('AutoKill', {
     end
 })
 
-LeftGroupBox:AddSlider('DelayTp', {
+RightGroupBox:AddSlider('DelayTp', {
     Text = 'Delay Tp',
     Default = 1,
     Min = 0,
